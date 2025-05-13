@@ -1,51 +1,180 @@
 <!---
 {
-  "depends_on": [],
-  "author": "Stephan Bökelmann",
-  "first_used": "2025-03-17",
-  "keywords": ["learning", "exercises", "education", "practice"]
+  "id": "fcef696e-079c-4d83-b611-7b378bb8ac07"
+  "depends_on": ["7f50ba23-f5a6-4bc7-887f-ed9247220544"],
+  "author": "Exercise Sheet Assistant",
+  "first_used": "2025-05-13",
+  "keywords": ["apt", "dpkg", "linux", "package management", "command line"]
 }
 --->
 
-# Learning Through Exercises
 
-## Introduction
-Learning by doing is one of the most effective methods to acquire new knowledge and skills. Rather than passively consuming information, actively engaging in problem-solving fosters deeper understanding and long-term retention. By working through structured exercises, students can grasp complex concepts in a more intuitive and applicable way. This approach is particularly beneficial in technical fields like programming, mathematics, and engineering.
+# Introduction to the `apt` Package Manager
+
+> In this exercise you will learn how to use the `apt` package manager to install, manage, and remove software on Debian-based Linux systems. Furthermore we will explore how `apt` compares to other package management systems and understand the underlying principles of software installation on Unix-like systems.
+
+### Introduction
+
+Package managers are fundamental tools in modern Linux systems. They automate the process of installing, upgrading, configuring, and removing software packages, along with handling their dependencies. `apt`, short for Advanced Package Tool, is the default front-end for package management on Debian and its derivatives, including Ubuntu.
+
+`apt` builds upon `dpkg`, the lower-level Debian package management tool. While `dpkg` can install `.deb` files and query the local package database, it does not resolve dependencies automatically. `apt`, on the other hand, communicates with online repositories, downloads necessary files, and ensures all dependencies are met. This makes `apt` more user-friendly and suitable for everyday package management tasks.
+
+A *repository* in this context is a collection of software packages stored on a remote server. These repositories are curated by maintainers and provide secure, up-to-date software that can be easily retrieved and installed by package managers.
+
+Why don't we install software manually, say by downloading and compiling source code? The answer lies in convenience, security, and consistency. Package managers ensure you get trusted, verified software tailored for your system. They maintain records, allow upgrades, and remove software cleanly without leaving orphaned files.
+
+Installing software means more than copying files. It involves placing them in correct directories, setting permissions, updating menus or paths, and registering with system databases. Unmanaged installations lack these safeguards, leading to potential conflicts and security risks.
+
+Beyond `apt` and `dpkg`, other popular package managers include `yum` and `dnf` for RPM-based distributions, `pacman` for Arch Linux, and `zypper` for openSUSE. Each has unique features but serves the same core purpose.
 
 ### Further Readings and Other Sources
-- [The Importance of Practice in Learning](https://www.sciencedirect.com/science/article/pii/S036013151300062X)
-- "The Art of Learning" by Josh Waitzkin
-- [How to Learn Effectively: 5 Key Strategies](https://www.edutopia.org/article/5-research-backed-learning-strategies)
+
+* [Debian Wiki on APT](https://wiki.debian.org/Apt)
+* [APT vs DPKG Explained - YouTube](https://www.youtube.com/watch?v=57Ra2c7AvtE)
+* [APT documentation (manpages)](https://man7.org/linux/man-pages/man8/apt.8.html)
 
 ## Tasks
-1. **Write a Summary**: Summarize the concept of "learning by doing" in 3-5 sentences.
-2. **Example Identification**: List three examples from your own experience where learning through exercises helped you understand a topic better.
-3. **Create an Exercise**: Design a simple exercise for a topic of your choice that someone else could use to practice.
-4. **Follow an Exercise**: Find an online tutorial that includes exercises and complete at least two of them.
-5. **Modify an Existing Exercise**: Take a basic problem from a textbook or online course and modify it to make it slightly more challenging.
-6. **Pair Learning**: Explain a concept to a partner and guide them through an exercise without giving direct answers.
-7. **Review Mistakes**: Look at an exercise you've previously completed incorrectly. Identify why the mistake happened and how to prevent it in the future.
-8. **Time Challenge**: Set a timer for 10 minutes and try to solve as many simple exercises as possible on a given topic.
-9. **Self-Assessment**: Create a checklist to evaluate your own performance in completing exercises effectively.
-10. **Reflect on Progress**: Write a short paragraph on how this structured approach to exercises has influenced your learning.
 
-<details>
-  <summary>Tip for Task 5</summary>
-  Try making small adjustments first, such as increasing the difficulty slightly or adding an extra constraint.
-</details>
+### Task 1: Install the `sl` Package
 
-## Questions
-1. What are the main benefits of learning through exercises compared to passive learning?
-2. How do exercises improve long-term retention?
-3. Can you think of a subject where learning through exercises might be less effective? Why?
-4. What role does feedback play in learning through exercises?
-5. How can self-designed exercises improve understanding?
-6. Why is it beneficial to review past mistakes in exercises?
-7. How does explaining a concept to someone else reinforce your own understanding?
-8. What strategies can you use to stay motivated when practicing with exercises?
-9. How can timed challenges contribute to learning efficiency?
-10. How do exercises help bridge the gap between theory and practical application?
+1. Open your terminal.
+2. Update your package list:
+
+   ```sh
+   sudo apt update
+   ```
+3. Install the `sl` package:
+
+   ```sh
+   sudo apt install sl
+   ```
+4. Run `sl` by typing:
+
+   ```sh
+   sl
+   ```
+
+   This playful command simulates a steam locomotive — try it out!
+
+### Task 2: Add Another Repository
+
+1. Attempt to install a package from the "universe" repository:
+
+   ```sh
+   sudo apt install byobu
+   ```
+
+   This will likely fail because the repository is not enabled yet.
+2. Edit your sources list using `vim`:
+
+   ```sh
+   sudo vim /etc/apt/sources.list
+   ```
+3. Add the following line:
+
+   ```
+   deb http://archive.ubuntu.com/ubuntu focal universe
+   ```
+4. Save and exit `vim`, then update:
+
+   ```sh
+   sudo apt update
+   ```
+5. Retry installing the package:
+
+   ```sh
+   sudo apt install byobu
+   ```
+
+   It should now succeed, as the package is available in the added repository.
+
+### Task 3: Add a Key to the Keychain and Install a Third-Party Package
+
+1. Try installing a third-party package not found in default repositories:
+
+   ```sh
+   sudo apt install neofetch
+   ```
+
+   This will fail because the repository and key are not yet configured.
+2. Create a new file for the repository using `vim`:
+
+   ```sh
+   sudo vim /etc/apt/sources.list.d/neofetch.list
+   ```
+3. Add the following line:
+
+   ```
+   deb http://ppa.launchpad.net/dawidd0811/neofetch/ubuntu focal main
+   ```
+4. Save and exit `vim`.
+5. Add the GPG key for the repository:
+
+   ```sh
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+   ```
+6. Update your package list:
+
+   ```sh
+   sudo apt update
+   ```
+7. Try installing again:
+
+   ```sh
+   sudo apt install neofetch
+   ```
+
+   It should now work, as the repository and key have been added correctly.
+
+### Task 4: Upgrade Installed Packages
+
+1. To see available upgrades:
+
+   ```sh
+   apt list --upgradable
+   ```
+2. To upgrade all packages:
+
+   ```sh
+   sudo apt upgrade
+   ```
+
+   Upgrading means replacing currently installed packages with newer versions, which often includes security patches, bug fixes, and new features.
+
+### Task 5: Uninstall a Package
+
+1. Remove `sl` without deleting configuration files:
+
+   ```sh
+   sudo apt remove sl
+   ```
+
+   This uninstalls the program but keeps config files for potential reuse. Keeping config files is useful if you plan to reinstall the software with previous settings intact.
+
+### Task 6: Purge Packages Completely
+
+1. To remove the package and its configuration files:
+
+   ```sh
+   sudo apt purge sl
+   ```
+2. Also purge `byobu` and `neofetch` to remove them completely:
+
+   ```sh
+   sudo apt purge byobu neofetch
+   ```
+
+   This ensures a cleaner uninstallation with no trace left behind, which is useful when completely resetting or eliminating a package.
+
+## Comprehension Questions
+
+1. What are the main differences between `apt` and `dpkg`?
+2. Why is using a package manager safer than manual installation?
+3. What does the `apt update` command do?
+4. How do you add a new software source in Debian-based systems?
+5. What is the purpose of adding a GPG key when adding a repository?
+6. What is the difference between `apt remove` and `apt purge`?
 
 ## Advice
-Practice consistently and seek out diverse exercises that challenge different aspects of a topic. Combine exercises with reflection and feedback to maximize your learning efficiency. Don't hesitate to adapt exercises to fit your own needs and ensure that you're actively engaging with the material, rather than just going through the motions.
 
+Learning to manage packages using `apt` is a fundamental skill for anyone working with Debian-based systems. It saves time, ensures security, and helps you keep your system in a maintainable state. As you proceed, try exploring advanced topics like pinning packages, holding versions, or using `aptitude`. Mastering these tools will make you a more effective and self-sufficient Linux user. Don't hesitate to revisit related exercises like \[UUID-dpkg-basic-001] or \[UUID-apt-troubleshooting-002] once you're comfortable with the basics.
