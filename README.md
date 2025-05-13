@@ -170,7 +170,7 @@ Linux package repositories use cryptographic signatures to ensure the authentici
 
    This ensures a cleaner uninstallation with no trace left behind, which is useful when completely resetting or eliminating a package.
 
-## Comprehension Questions
+## Questions
 
 1. What are the main differences between `apt` and `dpkg`?
 2. Why is using a package manager safer than manual installation?
