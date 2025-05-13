@@ -1,7 +1,7 @@
 <!---
 {
   "id": "fcef696e-079c-4d83-b611-7b378bb8ac07"
-  "depends_on": ["7f50ba23-f5a6-4bc7-887f-ed9247220544"],
+  "depends_on": ["AND", "d58d972d-7730-4b1c-8ec2-a8288ef0ed05", "7f50ba23-f5a6-4bc7-887f-ed9247220544"],
   "author": "Exercise Sheet Assistant",
   "first_used": "2025-05-13",
   "keywords": ["apt", "dpkg", "linux", "package management", "command line"]
