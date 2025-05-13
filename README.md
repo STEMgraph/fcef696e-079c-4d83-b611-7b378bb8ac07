@@ -58,6 +58,8 @@ Beyond `apt` and `dpkg`, other popular package managers include `yum` and `dnf` 
 
 ### Task 2: Add Another Repository
 
+In Linux systems, repositories are centralized servers where collections of software packages are stored and maintained. These repositories are essential for a secure and efficient software installation process. Ubuntu includes several default repositories, such as 'main' and 'restricted', which are maintained by Canonical. The 'universe' repository, however, contains community-maintained software. While not officially supported, it greatly expands the available software. Adding a repository makes its contents available for installation and upgrades via the package manager.
+
 1. Attempt to install a package from the "universe" repository:
 
    ```sh
@@ -89,6 +91,8 @@ Beyond `apt` and `dpkg`, other popular package managers include `yum` and `dnf` 
    It should now succeed, as the package is available in the added repository.
 
 ### Task 3: Add a Key to the Keychain and Install a Third-Party Package
+
+Linux package repositories use cryptographic signatures to ensure the authenticity and integrity of their packages. These signatures are verified using GPG keys. If the key is not available on your system, apt will reject the package source. Therefore, before installing software from an external repository, it is essential to add the corresponding GPG key to your system’s trusted keyring.
 
 1. Try installing a third-party package not found in default repositories:
 
